@@ -1,0 +1,8 @@
+[package]
+name    = "hello"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+kalio-sdk    = { workspace = true }
+kalio-shared = { workspace = true }
