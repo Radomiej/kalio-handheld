@@ -1,0 +1,18 @@
+# Cross-compile container — aarch64-unknown-linux-gnu.
+# Uses the cross-rs base image which has a full ARM64 sysroot.
+#
+# docker compose -f docker/docker-compose.yml run cross-build
+
+FROM ghcr.io/cross-rs/aarch64-unknown-linux-gnu:main
+
+RUN apt-get update && apt-get install -y \
+    pkg-config \
+    libsdl2-dev:arm64 \
+    libsdl2-ttf-dev:arm64 \
+    libsdl2-image-dev:arm64 \
+    libsdl2-mixer-dev:arm64 \
+    && rm -rf /var/lib/apt/lists/* 2>/dev/null || true
+
+WORKDIR /workspace
+
+CMD ["cargo", "build", "-p", "kalio-runtime", "--release", "--target", "aarch64-unknown-linux-gnu"]

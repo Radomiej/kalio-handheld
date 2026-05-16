@@ -1,0 +1,8 @@
+// Default runtime configuration (RON format).
+// Copy to config/local.ron to override without committing.
+AppConfig(
+    name:    "Kalio",
+    version: "0.1.0",
+    width:   640,
+    height:  480,
+)

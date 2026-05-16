@@ -1,0 +1,44 @@
+services:
+
+  # ── Main runtime (desktop-debug, SDL2 window) ──────────────────────────
+  runtime-dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    volumes:
+      - ..:/workspace
+      - cargo-cache:/usr/local/cargo/registry
+    working_dir: /workspace
+    command: ["cargo", "run", "-p", "kalio-runtime", "--features", "desktop-debug"]
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - RUST_LOG=kalio_runtime=debug
+    network_mode: host
+    stdin_open: true
+    tty: true
+
+  # ── WebSocket dev server (hot-reload) ─────────────────────────────
+  dev-server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.go
+    volumes:
+      - ..:/workspace
+    working_dir: /workspace/tools/dev-server
+    command: ["go", "run", ".", "/workspace/apps", "8765"]
+    ports:
+      - "8765:8765"
+
+  # ── ARM64 cross-build ─────────────────────────────────────────────
+  cross-build:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.cross
+    volumes:
+      - ..:/workspace
+      - cargo-cache:/usr/local/cargo/registry
+    working_dir: /workspace
+    profiles: ["cross"]
+
+volumes:
+  cargo-cache:

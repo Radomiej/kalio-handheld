@@ -1,0 +1,33 @@
+# syntax=docker/dockerfile:1
+
+# Development container — Rust + SDL2 + cross-compile tools.
+# Mount the repo as /workspace and run `cargo run` inside.
+#
+# docker compose -f docker/docker-compose.yml up runtime-dev
+
+FROM rust:1.88
+
+RUN apt-get update && apt-get install -y \
+    libsdl2-dev \
+    libsdl2-ttf-dev \
+    libsdl2-image-dev \
+    libsdl2-mixer-dev \
+    cmake \
+    pkg-config \
+    clang \
+    # cross-compile deps
+    gcc-aarch64-linux-gnu \
+    libc6-dev-arm64-cross \
+    && rm -rf /var/lib/apt/lists/*
+
+# ARM64 target
+RUN rustup target add aarch64-unknown-linux-gnu
+RUN rustup component add clippy rustfmt
+
+# Cargo cache lives outside the workspace
+ENV CARGO_HOME=/usr/local/cargo
+ENV RUST_BACKTRACE=1
+
+WORKDIR /workspace
+
+CMD ["cargo", "run", "-p", "kalio-runtime", "--features", "desktop-debug"]
