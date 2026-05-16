@@ -1,0 +1,25 @@
+/target
+/dist
+**/.DS_Store
+*.pdb
+*.idb
+*.ilk
+*.exp
+*.lib
+*.dll
+
+# Go
+tools/dev-server/dev-server
+tools/dev-server/kalio-dev-server
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Local config overrides
+config/local.ron

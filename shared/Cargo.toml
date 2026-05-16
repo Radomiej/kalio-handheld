@@ -1,0 +1,8 @@
+[package]
+name    = "kalio-shared"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+ron   = { workspace = true }

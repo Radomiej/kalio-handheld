@@ -1,0 +1,24 @@
+[package]
+name    = "kalio-runtime"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+sdl2               = { workspace = true }
+taffy              = { workspace = true }
+tokio              = { workspace = true }
+reqwest            = { workspace = true }
+tokio-tungstenite  = { workspace = true }
+futures-util       = { workspace = true }
+serde              = { workspace = true }
+ron                = { workspace = true }
+mlua               = { workspace = true }
+rusqlite           = { workspace = true }
+tracing            = { workspace = true }
+tracing-subscriber = { workspace = true }
+anyhow             = { workspace = true }
+kalio-shared       = { workspace = true }
+
+[features]
+default       = []
+desktop-debug = []
